@@ -2,25 +2,24 @@
 #include <stdio.h>
 #include <strings.h>
 
+char complement[256];
 
-char complement(char c) {
-    if ('a' <= c && c <= 'z') c -= 'a'-'A';
-    switch(c) {
-#define complementCase(a, b) case (a): return (b); case(b): return (a)
+void setup_complement(void) {
+    unsigned char c;
+    for(c=0; c < 255; c++) complement[c] = c;
+#define complementCase(a, b) { complement[a] = b; complement[b] = a; complement[a+32]=b; complement[b+32]=a; }
         complementCase('G','C');
         complementCase('A','T');
         complementCase('M', 'K');
         complementCase('R', 'Y');
         complementCase('V', 'B');
         complementCase('H', 'D');
-        default: return c;
-    }
 }
 
 void complementAll(char* array, size_t len) {
     int i;
     for(i=0; i<len; i++)
-        array[i] = complement(array[i]);
+        array[i] = complement[array[i]];
 }
 
 void reverse(char* array, size_t len) {
@@ -37,6 +36,7 @@ void reverse(char* array, size_t len) {
 }
 
 int main(int argc, char** argv) {
+    setup_complement();
     size_t bufsize = 1024;
     size_t nread = 0;
     size_t blockstart=0, blockend=0;
