@@ -45,5 +45,5 @@ HaskellText-time: HaskellText data-in.txt
 .PHONY: clean
 
 clean:
-	rm -f revcomp revcomp-paul fasta data-in.txt revcomp.test.out revcomp-paul.test.out HaskellText.test.out
+	rm -f revcomp revcomp-paul fasta data-in.txt revcomp.test.out revcomp-paul.test.out HaskellText.test.out HaskellText
 	rm -rf *.o *.dSYM *.hi
