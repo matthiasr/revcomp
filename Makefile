@@ -1,6 +1,10 @@
 CC?= gcc
 
-all: revcomp-test revcomp-paul-test HaskellText-test revcomp-time revcomp-paul-time HaskellText-time
+all: test time
+
+test: revcomp-test revcomp-paul-test HaskellText-test
+
+time: revcomp-time revcomp-paul-time HaskellText-time
 
 fasta: fasta.c
 	${CC} -pipe -Wall -O3 -fomit-frame-pointer -std=c99 -mfpmath=sse -msse3 fasta.c -o fasta
