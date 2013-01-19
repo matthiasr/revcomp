@@ -1,6 +1,6 @@
 CC?= gcc
 
-all: revcomp-test revcomp-paul-test revcomp-time revcomp-paul-time
+all: revcomp-test revcomp-paul-test HaskellText-test revcomp-time revcomp-paul-time HaskellText-time
 
 fasta: fasta.c
 	${CC} -pipe -Wall -O3 -fomit-frame-pointer -std=c99 -mfpmath=sse -msse3 fasta.c -o fasta
@@ -28,8 +28,18 @@ revcomp-time: revcomp data-in.txt
 revcomp-paul-time: revcomp-paul data-in.txt
 	time ./revcomp-paul < data-in.txt > /dev/null
 
+HaskellText: HaskellText.hs
+	ghc -main-is HaskellText -O2  -fllvm -funbox-strict-fields HaskellText.hs
+
+HaskellText-test: HaskellText revcomp-input.txt revcomp-output.txt
+	time ./HaskellText < revcomp-input.txt > HaskellText.test.out
+	diff revcomp-output.txt HaskellText.test.out
+
+HaskellText-time: HaskellText data-in.txt
+	time ./HaskellText < data-in.txt > /dev/null
+
 .PHONY: clean
 
 clean:
-	rm -f revcomp revcomp-paul fasta data-in.txt revcomp.test.out revcomp-paul.test.out
-	rm -rf *.o *.dSYM
+	rm -f revcomp revcomp-paul fasta data-in.txt revcomp.test.out revcomp-paul.test.out HaskellText.test.out
+	rm -rf *.o *.dSYM *.hi
