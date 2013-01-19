@@ -11,6 +11,9 @@ data-in.txt: fasta
 revcomp: revcomp.c
 	${CC} -pipe -Wall -O3 -fomit-frame-pointer -march=native -std=c99 -mfpmath=sse -msse3 revcomp.c -o revcomp
 
+revcomp-paul: revcomp-paul.c
+	${CC} -pipe -Wall -O3 -fomit-frame-pointer -march=native -std=c99 -mfpmath=sse -msse3 revcomp-paul.c -o revcomp-paul
+
 revcomp-test: revcomp revcomp-input.txt revcomp-output.txt
 	time ./revcomp < revcomp-input.txt > revcomp.test.out
 	diff revcomp-output.txt revcomp.test.out
